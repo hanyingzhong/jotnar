@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/spf13/viper"
 )
 
 type config interface {
@@ -22,12 +24,12 @@ type defaultConfig struct {
 	Config          map[string]string // config key value
 }
 
-type viper struct {
-	// viper.Viper
+type viperConfig struct {
+	v *viper.Viper
 }
 
 func (*defaultConfig) witchConfig() {}
-func (*viper) witchConfig()         {}
+func (*viperConfig) witchConfig()   {}
 
 func NewDefaultConfig() *defaultConfig {
 	return &defaultConfig{
@@ -36,23 +38,45 @@ func NewDefaultConfig() *defaultConfig {
 	}
 }
 
-func NewViperConfig() *viper {
-	return nil
+// use -f to appoint a config file
+func NewViperConfig(fileType string) *viperConfig {
+	if len(os.Args) < 3 {
+		panic("need a config file use -f")
+	}
+
+	if os.Args[1] != "-f" {
+		panic("must use -f")
+	}
+
+	v := viper.New()
+	v.SetConfigFile(os.Args[2])
+	v.SetConfigType(fileType)
+	if err := v.ReadInConfig(); err != nil {
+		panic(err)
+	}
+	return &viperConfig{v}
+}
+
+func NewViperConfigToml() *viperConfig {
+	return NewViperConfig(ConfigFileType.Toml)
 }
 
 var (
-	DefaultConfig = NewDefaultConfig()
-	ViperConfig   = NewViperConfig()
+	ViperConfig *viperConfig
+
+	// simple to use
+	ViperConfigToml = NewViperConfigToml()
+	DefaultConfig   = NewDefaultConfig()
 )
 
 // after init, the config will load in memory
-// then you guys can use by GetString...
+// then you guys can use by GetValue...
 func (j Jotnar) InitConfig(c config) Jotnar {
 	switch cf := c.(type) {
 	case *defaultConfig:
 		doDefaultConfig(cf)
-	case *viper:
-
+	case *viperConfig:
+		ViperConfig = cf
 	default:
 		panic("should use defaultConfig or viper to init")
 	}
@@ -89,4 +113,9 @@ func GetValue(key string) string {
 	} else {
 		return v
 	}
+}
+
+// if you use viper, use this function
+func GetViper() *viper.Viper {
+	return ViperConfig.v
 }

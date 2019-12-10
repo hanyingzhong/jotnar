@@ -15,14 +15,35 @@ there is 2 choice to use<br>
 * the sdk default args packages
 * use [viper](https://github.com/spf13/viper)
 
-### default init
-```go
-jotnar.New().InitConfig(jotnar.DefaultConfig)
-fmt.Println(jotnar.GetVaule("ip"))
-```
+### use default
+this way will launch your application use command line flag
 run your application by this
 ```sh
 ./application --ip 192.168.0.1 --port 100
 ```
 
-* [MIT License](https://github.com/paulyung541/jotnar/blob/master/LICENSE)
+```go
+jotnar.New().InitConfig(jotnar.DefaultConfig)
+fmt.Println(jotnar.GetVaule("ip"))
+```
+
+### use viper
+must use `-f` flag
+```sh
+./application -f config.toml
+```
+
+your toml file like this
+```toml
+[server]
+    url = "myserver.com"
+```
+
+code like this
+```go
+jotnar.New().InitConfig(jotnar.ViperConfigToml)
+fmt.Println(jotnar.GetViper().GetString("server.url"))
+```
+
+## License
+[MIT](https://github.com/paulyung541/jotnar/blob/master/LICENSE)
