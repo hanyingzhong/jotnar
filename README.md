@@ -1,5 +1,6 @@
 # jotnar
-a fast build framework about go application 
+a fast build framework about go application
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
 
 ![](https://github.com/paulyung541/jotnar/blob/master/gopher_head.png)
 
