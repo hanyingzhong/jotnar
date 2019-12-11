@@ -2,6 +2,6 @@ package jotnar
 
 type Jotnar struct{}
 
-func New() Jotnar {
-	return Jotnar{}
+func New() *Jotnar {
+	return new(Jotnar)
 }

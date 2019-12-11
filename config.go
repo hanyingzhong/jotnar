@@ -1,7 +1,6 @@
 package jotnar
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -28,8 +27,20 @@ type viperConfig struct {
 	v *viper.Viper
 }
 
+var ConfigFileType = struct {
+	Json       string
+	Toml       string
+	Yaml       string
+	Hcl        string
+	Ini        string
+	Properties string
+}{"json", "toml", "yaml", "hcl", "ini", "properties"}
+
 func (*defaultConfig) witchConfig() {}
 func (*viperConfig) witchConfig()   {}
+
+// when use viper, set value 'viper'
+var CurrentConfigType = "default"
 
 func NewDefaultConfig() *defaultConfig {
 	return &defaultConfig{
@@ -62,26 +73,36 @@ func NewViperConfigToml() *viperConfig {
 }
 
 var (
-	ViperConfig *viperConfig
-
-	// simple to use
-	ViperConfigToml = NewViperConfigToml()
-	DefaultConfig   = NewDefaultConfig()
+	ViperConfig   *viperConfig
+	DefaultConfig *defaultConfig
 )
 
 // after init, the config will load in memory
 // then you guys can use by GetValue...
-func (j Jotnar) InitConfig(c config) Jotnar {
+func (j *Jotnar) InitConfig(c config) *Jotnar {
 	switch cf := c.(type) {
 	case *defaultConfig:
+		CurrentConfigType = "default"
+		DefaultConfig = cf
 		doDefaultConfig(cf)
 	case *viperConfig:
+		CurrentConfigType = "viper"
 		ViperConfig = cf
 	default:
 		panic("should use defaultConfig or viper to init")
 	}
 
 	return j
+}
+
+// use default k v flag by command
+func (j *Jotnar) InitConfigDefaultCommandFlag() *Jotnar {
+	return j.InitConfig(NewDefaultConfig())
+}
+
+// use viper to manage config; config file type is toml
+func (j *Jotnar) InitConfigViperToml() *Jotnar {
+	return j.InitConfig(NewViperConfigToml())
 }
 
 func doDefaultConfig(cf *defaultConfig) {
@@ -96,10 +117,8 @@ func doDefaultConfig(cf *defaultConfig) {
 		}
 
 		for i := 0; i < len(args); i += 2 {
-			cf.Config[strings.TrimLeft(args[i], "-")] = args[i+1]
+			cf.Config[strings.Trim(args[i], "-")] = strings.Trim(args[i+1], " ")
 		}
-
-		fmt.Printf("args = %+v\n", cf.Config)
 	} else {
 		// todo:
 	}

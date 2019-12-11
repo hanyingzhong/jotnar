@@ -26,7 +26,7 @@ run your application by this
 ```
 
 ```go
-jotnar.New().InitConfig(jotnar.DefaultConfig)
+jotnar.New().InitConfigDefaultCommandFlag()
 fmt.Println(jotnar.GetVaule("ip"))
 ```
 
@@ -44,7 +44,7 @@ your toml file like this
 
 code like this
 ```go
-jotnar.New().InitConfig(jotnar.ViperConfigToml)
+jotnar.New().InitConfigViperToml()
 fmt.Println(jotnar.GetViper().GetString("server.url"))
 ```
 
