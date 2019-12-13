@@ -52,7 +52,7 @@ fmt.Println(jotnar.GetViper().GetString("server.url"))
 ```
 
 for unit test
-```
+```go
 func TestRead(t *testing.T) {
 	jotnar.New().InitConfigViperTomlTest("config.toml")
 	t.Log(jotnar.GetViper().GetString("server.url"))
