@@ -24,6 +24,9 @@ func (j *Jotnar) InitMysql() *Jotnar {
 	// init
 	MConfig = readFromViper()
 
+	// feture: support to choice orm framework
+	InitGorm()
+
 	return j
 }
 

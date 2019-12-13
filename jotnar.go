@@ -27,6 +27,7 @@ func emptyStr(s string) bool {
 func errExit(err error) {
 	if err != nil {
 		fmt.Println(err)
+		fmt.Println("program exit...")
 		os.Exit(-1)
 	}
 }
