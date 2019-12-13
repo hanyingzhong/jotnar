@@ -1,5 +1,10 @@
 package jotnar
 
+import (
+	"fmt"
+	"os"
+)
+
 type Jotnar struct{}
 
 func New() *Jotnar {
@@ -17,4 +22,11 @@ func (*Jotnar) Init(functions ...func()) {
 
 func emptyStr(s string) bool {
 	return s == ""
+}
+
+func errExit(err error) {
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(-1)
+	}
 }
