@@ -5,5 +5,11 @@ type mysqlConfig struct {
 }
 
 type baseMysql struct {
-	dsn string
+	dsn     string
+	maxIdle int
+	maxOpen int
+}
+
+func (j *Jotnar) InitMysql() *Jotnar {
+	return j
 }

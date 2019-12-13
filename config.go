@@ -72,6 +72,20 @@ func NewViperConfigToml() *viperConfig {
 	return NewViperConfig(ConfigFileType.Toml)
 }
 
+func NewViperConfigTest(fileType, filePath string) *viperConfig {
+	v := viper.New()
+	v.SetConfigFile(filePath)
+	v.SetConfigType(fileType)
+	if err := v.ReadInConfig(); err != nil {
+		panic(err)
+	}
+	return &viperConfig{v}
+}
+
+func NewViperConfigTomlTest(filePath string) *viperConfig {
+	return NewViperConfigTest(ConfigFileType.Toml, filePath)
+}
+
 var (
 	ViperConfig   *viperConfig
 	DefaultConfig *defaultConfig
@@ -103,6 +117,11 @@ func (j *Jotnar) InitConfigDefaultCommandFlag() *Jotnar {
 // use viper to manage config; config file type is toml
 func (j *Jotnar) InitConfigViperToml() *Jotnar {
 	return j.InitConfig(NewViperConfigToml())
+}
+
+// for unit test, use this one
+func (j *Jotnar) InitConfigViperTomlTest(filePath string) *Jotnar {
+	return j.InitConfig(NewViperConfigTomlTest(filePath))
 }
 
 func doDefaultConfig(cf *defaultConfig) {

@@ -12,7 +12,9 @@ a fast build framework about go application<br>
 go get -u github.com/paulyung541/jotnar
 ```
 
-* [config initialization and get value]()
+* [config initialization and get value](https://github.com/paulyung541/jotnar#config-initialization-and-get-value)
+  * [use default](https://github.com/paulyung541/jotnar#use-default)
+  * [use viper](https://github.com/paulyung541/jotnar#use-viper)
 
 ## config initialization and get value
 there is 2 choice to use<br>
@@ -47,6 +49,14 @@ code like this
 ```go
 jotnar.New().InitConfigViperToml()
 fmt.Println(jotnar.GetViper().GetString("server.url"))
+```
+
+for unit test
+```
+func TestRead(t *testing.T) {
+	jotnar.New().InitConfigViperTomlTest("config.toml")
+	t.Log(jotnar.GetViper().GetString("server.url"))
+}
 ```
 
 ## License
