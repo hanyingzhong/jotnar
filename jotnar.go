@@ -14,3 +14,7 @@ func (*Jotnar) Init(functions ...func()) {
 		}
 	}
 }
+
+func emptyStr(s string) bool {
+	return s == ""
+}
