@@ -15,6 +15,7 @@ go get -u github.com/paulyung541/jotnar
 * [config initialization and get value](https://github.com/paulyung541/jotnar#config-initialization-and-get-value)
   * [use default](https://github.com/paulyung541/jotnar#use-default)
   * [use viper](https://github.com/paulyung541/jotnar#use-viper)
+* [mysql config](https://github.com/paulyung541/jotnar#mysql-config)
 
 ## config initialization and get value
 there is 2 choice to use<br>
@@ -56,6 +57,54 @@ for unit test
 func TestRead(t *testing.T) {
 	jotnar.New().InitConfigViperTomlTest("config.toml")
 	t.Log(jotnar.GetViper().GetString("server.url"))
+}
+```
+
+## mysql config
+write the config like this
+```toml
+[mysql.main]
+    dsn = "root:@tcp(localhost:3306)/test?charset=utf8&parseTime=True&loc=Local"
+    maxIdle = 5
+    maxOpen = 10
+```
+
+and the the init code like this
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/paulyung541/jotnar"
+)
+
+type Student struct {
+	ID   uint32
+	Name string
+	Sex  uint8
+}
+
+func (*Student) TableName() string {
+	return "student"
+}
+
+func main() {
+	fmt.Println("this is example")
+
+	jotnar.New().
+		InitConfigViperToml().
+		InitMysql().
+		Init(func() {
+			fmt.Println("initialization over")
+		})
+
+	var stu Student
+	if err := jotnar.ReadGorm().First(&stu).Error; err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Printf("stu = %+v\n", stu)
 }
 ```
 
