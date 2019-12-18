@@ -69,7 +69,7 @@ write the config like this
     maxOpen = 10
 ```
 
-and the the init code like this
+and the the init code like this, it's very easy to use
 ```go
 package main
 
