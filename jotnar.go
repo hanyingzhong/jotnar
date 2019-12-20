@@ -3,12 +3,18 @@ package jotnar
 import (
 	"fmt"
 	"os"
+	"runtime"
 )
 
 type Jotnar struct{}
 
 func New() *Jotnar {
+	defaultInit()
 	return new(Jotnar)
+}
+
+func defaultInit() {
+	runtime.GOMAXPROCS(runtime.NumCPU())
 }
 
 // customer common initialization
