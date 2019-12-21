@@ -9,13 +9,17 @@ type logConfig struct {
 
 var defualtLogConfig *logConfig
 
-func InitLogger() {
+func (j *Jotnar) InitLogger() *Jotnar {
 	switch CurrentConfigType {
 	case "default":
 		logReadFromDefault()
 	case "viper":
 		logReadFromViper()
 	}
+
+	InitLogrus()
+
+	return j
 }
 
 func logReadFromDefault() {
@@ -25,9 +29,9 @@ func logReadFromDefault() {
 func logReadFromViper() {
 	v := GetViper()
 	defualtLogConfig = &logConfig{
-		FilePath: v.GetString("log.default.file"),
-		Level: v.GetString("log.default.level"),
-		Format: v.GetString("log.default.format"),
+		FilePath:   v.GetString("log.default.file"),
+		Level:      v.GetString("log.default.level"),
+		Format:     v.GetString("log.default.format"),
 		Timeformat: v.GetString("log.default.timeFormat"),
 	}
 }
