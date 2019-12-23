@@ -13,19 +13,19 @@ var gormInstance *Gorm
 
 func InitGorm() {
 	gormInstance = &Gorm{make(map[string]*gorm.DB)}
-	mainDb, err := gorm.Open("mysql", MConfig.MysqlSet["main"].Dsn)
+	mainDb, err := gorm.Open("mysql", MysqlConfig["main"].Dsn)
 	errExit(err)
-	mainDb.DB().SetMaxIdleConns(MConfig.MysqlSet["main"].MaxIdle)
-	mainDb.DB().SetMaxOpenConns(MConfig.MysqlSet["main"].MaxOpen)
+	mainDb.DB().SetMaxIdleConns(MysqlConfig["main"].MaxIdle)
+	mainDb.DB().SetMaxOpenConns(MysqlConfig["main"].MaxOpen)
 
 	gormInstance.gormSet["main"] = mainDb
 
-	if MConfig.MysqlSet["salve"] != nil {
-		slaveDb, err := gorm.Open("mysql", MConfig.MysqlSet["slave"].Dsn)
+	if MysqlConfig["salve"] != nil {
+		slaveDb, err := gorm.Open("mysql", MysqlConfig["slave"].Dsn)
 		errExit(err)
 
-		slaveDb.DB().SetMaxIdleConns(MConfig.MysqlSet["slave"].MaxIdle)
-		slaveDb.DB().SetMaxOpenConns(MConfig.MysqlSet["slave"].MaxOpen)
+		slaveDb.DB().SetMaxIdleConns(MysqlConfig["slave"].MaxIdle)
+		slaveDb.DB().SetMaxOpenConns(MysqlConfig["slave"].MaxOpen)
 
 		gormInstance.gormSet["slave"] = slaveDb
 	}

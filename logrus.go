@@ -36,6 +36,7 @@ func InitLogrus() {
 	if defualtLogConfig.Format == "json" {
 		jsonFormat := &logrus.JSONFormatter{
 			CallerPrettyfier: myCallerPrettyfier,
+			PrettyPrint:      defualtLogConfig.IsPretty,
 		}
 
 		jsonFormat.TimestampFormat = "2006-01-02 15:04:05"

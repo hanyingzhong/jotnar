@@ -6,7 +6,6 @@ TESTARGS                ?= -v -race
 .PHONY: setup
 setup:
 	@echo ">> installing dependencies"
-	@$(GO) get -u "github.com/golang/tools/cmd/goimports"
 	@$(GO) mod tidy
 
 .PHONY: test
@@ -16,7 +15,6 @@ test:
 
 .PHONY: fmt
 fmt:
-	@find . -name "*.go" | xargs goimports -w
 	@find . -name "*.go" | xargs gofmt -w
 
 .PHONY: lint

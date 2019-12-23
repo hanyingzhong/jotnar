@@ -8,7 +8,7 @@ jobs:
     steps:
 
     - name: Set up Go 1.13
-      uses: actions/setup-go@v1
+      uses: actions/setup-go@v1.1.2
       with:
         go-version: 1.13
       id: go
@@ -23,7 +23,3 @@ jobs:
     - name: Format code
       run: |
         make fmt
-        
-    - name: Lint code
-      run: |
-        make Lint

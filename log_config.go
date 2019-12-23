@@ -5,6 +5,7 @@ type logConfig struct {
 	Level      string
 	Format     string // text or json
 	Timeformat string
+	IsPretty   bool
 }
 
 var defualtLogConfig *logConfig
@@ -33,5 +34,6 @@ func logReadFromViper() {
 		Level:      v.GetString("log.default.level"),
 		Format:     v.GetString("log.default.format"),
 		Timeformat: v.GetString("log.default.timeFormat"),
+		IsPretty:   v.GetBool("log.default.isPretty"),
 	}
 }

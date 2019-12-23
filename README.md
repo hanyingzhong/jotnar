@@ -1,7 +1,7 @@
 # jotnar
 a fast build framework about go application<br>
-[![Build Status](https://travis-ci.org/jmoiron/sqlx.svg?branch=master)](https://travis-ci.org/jmoiron/sqlx)
-[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
+![](https://github.com/paulyung541/jotnar/workflows/.github/workflows/go.yml/badge.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 
@@ -16,6 +16,7 @@ go get -u github.com/paulyung541/jotnar
   * [use default](https://github.com/paulyung541/jotnar#use-default)
   * [use viper](https://github.com/paulyung541/jotnar#use-viper)
 * [mysql config](https://github.com/paulyung541/jotnar#mysql-config)
+* [logger config](https://github.com/paulyung541/jotnar#logger-config)
 
 ## config initialization and get value
 there is 2 choice to use<br>
@@ -106,6 +107,22 @@ func main() {
 	}
 	fmt.Printf("stu = %+v\n", stu)
 }
+```
+
+## logger config
+log framework use [logrus](https://github.com/sirupsen/logrus), you just need add `InitLogger()` to initialization, and add the config in the `toml` file like follow
+```toml
+[log.default]
+    file = ""
+    level = "debug"
+    format = "text"
+    timeFormat = "2006-01-02 15:04:05.000000"
+    isPretty = true
+```
+
+easy to use
+```go
+jotnar.GetLogger().Info("hello")
 ```
 
 ## License
