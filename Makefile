@@ -6,7 +6,7 @@ TESTARGS                ?= -v -race
 .PHONY: setup
 setup:
 	@echo ">> installing dependencies"
-	@curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.21.0
+	@sudo curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.21.0
 	@$(GO) get -u "github.com/golang/tools/cmd/goimports"
 	@$(GO) mod tidy
 
