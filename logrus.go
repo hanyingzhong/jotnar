@@ -2,6 +2,8 @@ package jotnar
 
 import (
 	"errors"
+	"fmt"
+	"io"
 	"os"
 	"path"
 	"runtime"
@@ -53,6 +55,30 @@ func InitLogrus() {
 	} else {
 		errExit(errors.New("format value must be json or text"))
 	}
+
+	defaultLogger.SetReportCaller(true)
+
+	fileName := defualtLogConfig.FilePath
+	if fileName != "" {
+		var (
+			f   *os.File
+			err error
+		)
+
+		if _, err = os.Stat(fileName); err != nil {
+			if os.IsNotExist(err) {
+				f, err = os.Create(fileName)
+				errExit(err)
+			} else {
+				errExit(err)
+			}
+		} else {
+			f, err = os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
+			errExit(err)
+		}
+
+		defaultLogger.SetOutput(io.MultiWriter(f, os.Stdout))
+	}
 }
 
 func myCallerPrettyfier(f *runtime.Frame) (string, string) {
@@ -66,7 +92,7 @@ func myCallerPrettyfier(f *runtime.Frame) (string, string) {
 		tmpArray = tmpArray[len(tmpArray)-3:]
 		filename = strings.Join(tmpArray, string(os.PathSeparator)) + filename
 	}
-	return funcname, filename
+	return funcname, filename + ":" + fmt.Sprint(f.Line)
 }
 
 func GetLogger() *logrus.Logger {
