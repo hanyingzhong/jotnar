@@ -33,8 +33,8 @@ func initGorm() {
 
 // use this to select
 func ReadGorm() *gorm.DB {
-	if gormInstance.gormSet["slave"] != nil {
-		return gormInstance.gormSet["slave"]
+	if sc, ok := gormInstance.gormSet["slave"]; ok {
+		return sc
 	}
 	return gormInstance.gormSet["main"]
 }

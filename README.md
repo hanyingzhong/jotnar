@@ -17,6 +17,7 @@ go get -u github.com/paulyung541/jotnar
   * [use viper](https://github.com/paulyung541/jotnar#use-viper)
 * [mysql config](https://github.com/paulyung541/jotnar#mysql-config)
 * [logger config](https://github.com/paulyung541/jotnar#logger-config)
+* [redis config](https://github.com/paulyung541/jotnar#redis-config)
 
 ## config initialization and get value
 there is 2 choice to use<br>
@@ -126,6 +127,18 @@ jotnar.GetLogger().Info("hello")
 ```
 
 of course, you don't need any config file, there also can be run, just output to STDOUT
+
+## redis config
+use the [Redis client for Golang](https://github.com/go-redis/redis), toml file like follow
+```toml
+[redis.main]
+    addr = "localhost:6379"
+    password = ""
+    db = 1
+    maxRetries = 3
+```
+
+read redis use `ReadRedis()` and write redis use `WriteRedis()`
 
 ## License
 [MIT](https://github.com/paulyung541/jotnar/blob/master/LICENSE)

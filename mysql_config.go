@@ -17,7 +17,6 @@ func (j *Jotnar) InitMysql() *Jotnar {
 		readMysqlFromViper()
 	}
 
-	// init
 	readMysqlFromViper()
 
 	initGorm()
@@ -30,8 +29,8 @@ func readMysqlFromDefault() {
 
 }
 
-// read all mysql.main.xxx
-// read all mysql.slave.xxx
+// read mysql.main.xxx
+// read mysql.slave.xxx
 func readMysqlFromViper() {
 	v := GetViper()
 
