@@ -14,7 +14,7 @@ import (
 
 var defaultLogger *logrus.Logger
 
-func InitLogrus() {
+func initLogrus() {
 	defaultLogger = logrus.New()
 	switch strings.ToLower(defualtLogConfig.Level) {
 	case "panic":
@@ -37,21 +37,14 @@ func InitLogrus() {
 		jsonFormat := &logrus.JSONFormatter{
 			CallerPrettyfier: myCallerPrettyfier,
 			PrettyPrint:      defualtLogConfig.IsPretty,
-		}
-
-		jsonFormat.TimestampFormat = "2006-01-02 15:04:05"
-		if defualtLogConfig.Timeformat != "" {
-			jsonFormat.TimestampFormat = defualtLogConfig.Timeformat
+			TimestampFormat:  defualtLogConfig.Timeformat,
 		}
 
 		defaultLogger.SetFormatter(jsonFormat)
 	} else if defualtLogConfig.Format == "text" {
 		textFormat := defaultLogger.Formatter.(*logrus.TextFormatter)
 		textFormat.CallerPrettyfier = myCallerPrettyfier
-		textFormat.TimestampFormat = "2006-01-02 15:04:05"
-		if defualtLogConfig.Timeformat != "" {
-			textFormat.TimestampFormat = defualtLogConfig.Timeformat
-		}
+		textFormat.TimestampFormat = defualtLogConfig.Timeformat
 		textFormat.FullTimestamp = true
 	} else {
 		errExit(errors.New("format value must be json or text"))

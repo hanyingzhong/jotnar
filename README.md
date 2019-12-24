@@ -125,5 +125,7 @@ easy to use
 jotnar.GetLogger().Info("hello")
 ```
 
+of course, you don't need any config file, there also can be run, just output to STDOUT
+
 ## License
 [MIT](https://github.com/paulyung541/jotnar/blob/master/LICENSE)

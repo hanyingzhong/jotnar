@@ -157,3 +157,11 @@ func GetValue(key string) string {
 func GetViper() *viper.Viper {
 	return ViperConfig.v
 }
+
+func GetString(key, defaultValue string) string {
+	value := GetViper().GetString(key)
+	if value == "" {
+		return defaultValue
+	}
+	return value
+}

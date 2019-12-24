@@ -11,7 +11,7 @@ type Gorm struct {
 
 var gormInstance *Gorm
 
-func InitGorm() {
+func initGorm() {
 	gormInstance = &Gorm{make(map[string]*gorm.DB)}
 	mainDb, err := gorm.Open("mysql", MysqlConfig["main"].Dsn)
 	errExit(err)

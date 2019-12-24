@@ -18,7 +18,7 @@ func (j *Jotnar) InitLogger() *Jotnar {
 		logReadFromViper()
 	}
 
-	InitLogrus()
+	initLogrus()
 
 	return j
 }
@@ -31,9 +31,9 @@ func logReadFromViper() {
 	v := GetViper()
 	defualtLogConfig = &logConfig{
 		FilePath:   v.GetString("log.default.file"),
-		Level:      v.GetString("log.default.level"),
-		Format:     v.GetString("log.default.format"),
-		Timeformat: v.GetString("log.default.timeFormat"),
+		Level:      GetString("log.default.level", "info"),
+		Format:     GetString("log.default.format", "text"),
+		Timeformat: GetString("log.default.timeFormat", "2006-01-02 15:04:05"),
 		IsPretty:   v.GetBool("log.default.isPretty"),
 	}
 }

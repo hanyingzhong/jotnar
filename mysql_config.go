@@ -20,7 +20,7 @@ func (j *Jotnar) InitMysql() *Jotnar {
 	// init
 	readMysqlFromViper()
 
-	InitGorm()
+	initGorm()
 
 	return j
 }
