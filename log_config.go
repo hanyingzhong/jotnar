@@ -24,7 +24,12 @@ func (j *Jotnar) InitLogger() *Jotnar {
 }
 
 func logReadFromDefault() {
-
+	defualtLogConfig = &logConfig{
+		Level:      "debug",
+		Format:     "text",
+		Timeformat: "2006-01-02 15:04:05",
+		IsPretty:   true,
+	}
 }
 
 func logReadFromViper() {

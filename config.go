@@ -125,7 +125,7 @@ func (j *Jotnar) InitConfigViperTomlTest(filePath string) *Jotnar {
 }
 
 func doDefaultConfig(cf *defaultConfig) {
-	if cf.IsCommandConfig == true {
+	if cf.IsCommandConfig {
 		if len(os.Args) < 2 {
 			panic("there is no arg, please input args or do not use this.")
 		}
