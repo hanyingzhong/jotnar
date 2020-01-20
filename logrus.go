@@ -78,7 +78,7 @@ func myCallerPrettyfier(f *runtime.Frame) (string, string) {
 	s := strings.Split(f.Function, ".")
 	funcname := s[len(s)-1]
 	filename := f.File
-	return funcname, " < " + filename + ":" + fmt.Sprint(f.Line) + " >"
+	return funcname + "\n", " < " + filename + ":" + fmt.Sprint(f.Line) + " >"
 }
 
 func GetLogger() *logrus.Logger {
