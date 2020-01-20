@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path"
 	"runtime"
 	"strings"
 
@@ -78,15 +77,8 @@ func initLogrus() {
 func myCallerPrettyfier(f *runtime.Frame) (string, string) {
 	s := strings.Split(f.Function, ".")
 	funcname := s[len(s)-1]
-	dir, filename := path.Split(f.File)
-	tmpArray := strings.Split(dir, string(os.PathSeparator))
-	if len(tmpArray) <= 3 {
-		filename = f.File
-	} else {
-		tmpArray = tmpArray[len(tmpArray)-3:]
-		filename = strings.Join(tmpArray, string(os.PathSeparator)) + filename
-	}
-	return funcname, filename + ":" + fmt.Sprint(f.Line)
+	filename := f.File
+	return funcname, " < " + filename + ":" + fmt.Sprint(f.Line) + " >"
 }
 
 func GetLogger() *logrus.Logger {
