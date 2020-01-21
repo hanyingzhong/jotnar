@@ -17,6 +17,7 @@ func initGorm() {
 	errExit(err)
 	mainDb.DB().SetMaxIdleConns(MysqlConfig["main"].MaxIdle)
 	mainDb.DB().SetMaxOpenConns(MysqlConfig["main"].MaxOpen)
+	mainDb.LogMode(MysqlConfig["main"].EnableLog)
 
 	gormInstance.gormSet["main"] = mainDb
 
@@ -26,6 +27,7 @@ func initGorm() {
 
 		slaveDb.DB().SetMaxIdleConns(MysqlConfig["slave"].MaxIdle)
 		slaveDb.DB().SetMaxOpenConns(MysqlConfig["slave"].MaxOpen)
+		mainDb.LogMode(MysqlConfig["slave"].EnableLog)
 
 		gormInstance.gormSet["slave"] = slaveDb
 	}

@@ -2,9 +2,10 @@ package jotnar
 
 // key - > main, slave
 type baseMysql struct {
-	Dsn     string
-	MaxIdle int
-	MaxOpen int
+	Dsn       string
+	MaxIdle   int
+	MaxOpen   int
+	EnableLog bool
 }
 
 var MysqlConfig = make(map[string]*baseMysql)
@@ -42,6 +43,7 @@ func readMysqlFromViper() {
 		Dsn:     v.GetString("mysql.main.dsn"),
 		MaxIdle: v.GetInt("mysql.main.maxIdle"),
 		MaxOpen: v.GetInt("mysql.main.maxOpen"),
+		EnableLog: v.GetBool("mysql.main.enableLog"),
 	}
 
 	if !emptyStr(v.GetString("mysql.slave.dsn")) {
@@ -49,6 +51,7 @@ func readMysqlFromViper() {
 			Dsn:     v.GetString("mysql.salve.dsn"),
 			MaxIdle: v.GetInt("mysql.salve.maxIdle"),
 			MaxOpen: v.GetInt("mysql.salve.maxOpen"),
+			EnableLog: v.GetBool("mysql.main.enableLog"),
 		}
 	}
 }
